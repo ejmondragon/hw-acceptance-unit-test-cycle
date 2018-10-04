@@ -1,7 +1,7 @@
 class MoviesController < ApplicationController
   
   def movie_params
-    params.require(:movie).permit(:title, :rating, :description, :release_date)
+    params.require(:movie).permit(:title, :director, :rating, :description, :release_date)
   end
 
   def show
@@ -30,7 +30,19 @@ class MoviesController < ApplicationController
       session[:ratings] = @selected_ratings
       redirect_to :sort => sort, :ratings => @selected_ratings and return
     end
+    
     @movies = Movie.where(rating: @selected_ratings.keys).order(ordering)
+  end
+  
+  def find_same_director
+    if params[:director] != nil
+      session[:director] = params[:director]
+      @movies = Movie.where(director: params[:director])
+    else
+      @movie = Movie.find params[:id]
+      flash[:notice] = "#{@movie.title} has no director!"
+      redirect_to movie_path(@movie)
+    end
   end
 
   def new
