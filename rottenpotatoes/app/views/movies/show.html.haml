@@ -22,4 +22,4 @@
 = button_to 'Delete', movie_path(@movie), :method => :delete, :confirm => 'Are you sure?'
 = link_to 'Back to movie list', movies_path
 %br
-= link_to 'Movies with same Director', movies_with_director_path(:id => @movie.id, :director => @movie.director)
+= link_to 'Find Movies With Same Director', movies_with_director_path(:id => @movie.id, :director => @movie.director)
